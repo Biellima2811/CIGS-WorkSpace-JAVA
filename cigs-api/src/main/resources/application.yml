@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: cigs-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cigs_db
+    username: postgres
+    password: tec@123 # Ajuste para a sua senha real do banco local
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    # A trava de seguranca: 'none' impede o Hibernate de apagar ou criar tabelas. 
+    # Ele vai usar estritamente o banco que o Python ja criou.
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
