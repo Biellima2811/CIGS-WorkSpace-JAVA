@@ -15,19 +15,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(AbstractHttpConfigurer::disable)
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/api/v1/servers/**").permitAll()   // libera para testes
-                .anyRequest().permitAll()                             // libera TUDO por ora
-            );
-        return http.build();
-    }
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+		http.csrf(AbstractHttpConfigurer::disable)
+		.authorizeHttpRequests(auth -> auth
+				.requestMatchers("/api/v1/auth/**").permitAll()
+				.requestMatchers("/api/v1/servers/**").permitAll() // <-- LIBERAÇÃO TEMPORÁRIA ADICIONADA AQUI
+				.anyRequest().authenticated()
+				);
+		return http.build();
+	}
 
     @Bean
     public PasswordEncoder passwordEncoder() {
