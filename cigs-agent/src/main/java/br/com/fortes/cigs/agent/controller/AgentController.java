@@ -1,5 +1,6 @@
 package br.com.fortes.cigs.agent.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,22 @@ public class AgentController {
 		String referenciaCliente = "N/A";
 		double diskFree = 0.0;
 		double ramUsage = 0.0;
+		
+		if (isFull) {
+			// Valores simulados de hardware por enquanto
+			diskFree = 120.5;
+			ramUsage = 45.2;
+		}
+		Map<String, Object> response = new HashMap<>();
+        response.put("status", "ONLINE");
+        response.put("version", VERSAO_AGENTE);
+        response.put("hash", "java_hash_placeholder");
+        response.put("clientes", qtdClientesAtivos);
+        response.put("ref", referenciaCliente);
+        response.put("sistema_lido", sistema);
+        response.put("disk", diskFree);
+        response.put("ram", ramUsage);
+        return ResponseEntity.ok(response);
 	}
 	
 }
